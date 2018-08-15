@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 var RaidSchema = new Schema({
   _id: Number,
@@ -9,6 +9,6 @@ var RaidSchema = new Schema({
   value: Number,
   users:[Number],
   loots:[{user:Number, item:String, alt:Boolean}] 
-});
+})
 
-exports = mongoose.model('Raid', RaidSchema);
+exports = mongoose.model('Raid', RaidSchema)

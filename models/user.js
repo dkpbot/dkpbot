@@ -1,13 +1,13 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 
 var UserSchema = new Schema({
   id: Number,
   tag: String,
-  username: String,
+  name: String,
   main: String,
   chars: [{name:String,class:String}]
-});
+})
 
-exports = mongoose.model('User', UserSchema);
+exports = mongoose.model('User', UserSchema)
