@@ -1,10 +1,18 @@
 const logger = require('../utils/logger.js')
-routes = {}
-routes
-exports.route = function(req){
-    console.log('command route')
 
-    var attendance = require('../controllers/attendance')
-    logger.route(`attendance > run`)
-    attendance.run(bot, message, command, args)
+var routes = new Map();
+routes.set(/attendance$/, function(req, matches){
+    console.log('hello world')
+})
+
+exports.route = function(req){
+    logger.debug('routes > command')
+
+    routes.forEach(function(value,key,map){
+        let matches = req.command.match(key)
+        if(matches){
+            logger.route(`matched regex ${key}`)
+            value(req, matches)
+        }
+    })
 }
