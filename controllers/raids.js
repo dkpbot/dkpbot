@@ -69,7 +69,7 @@ exports.read_users = async (bot, message, raid_id, args) => {
     })
 }
 
-exports.create_user = async (bot, message, raid_id, args) => {
+exports.add_user = async (bot, message, raid_id, args) => {
     //validate args
     var regex = /<@(\d*)>/
     var matches = args.match(regex)
@@ -78,7 +78,7 @@ exports.create_user = async (bot, message, raid_id, args) => {
                                     `example: +raids/${raid_id}/users @user`)
     }else var user = matches[1]
     if(user === process.env.BOT){
-        return message.channel.send(`BEEP BOP BOOP. robots can't attend raids`)
+        return message.channel.send(`BEEP BOOP. robots can't attend raids`)
     }
     //fetch raid
     let r = await Raid.findOne({_id:raid_id}, function(err) {
@@ -99,7 +99,4 @@ exports.create_user = async (bot, message, raid_id, args) => {
     }else{
         return message.channel.send(`user is already attending this raid`)
     }
-        
-
-
 }

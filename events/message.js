@@ -1,7 +1,7 @@
 // The MESSAGE event runs anytime a message is received
 // Note that due to the binding of bot to every event, every event
 // goes `bot, other, args` when this function is run.
-//const config = require('../config.json')
+
 const logger = require('../utils/logger.js')
 
 exports.run = (bot, message) => {
@@ -15,9 +15,9 @@ exports.run = (bot, message) => {
     return message.channel.send("This command is unavailable via private message.")
   }
 
-  var prefixes = ['!','+','?','#','-']
-  var prefix = message.content.charAt(0)
-  if(!prefixes.includes(prefix)) return
+  let prefixes = {'!':'command','+':'create','?':'read','#':'update','-':'delete'}
+  let prefix = message.content.charAt(0)
+  if(!prefixes[prefix]) return
 
   // Here we separate our "command" name, and our "arguments" for the command.
   // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
@@ -30,14 +30,11 @@ exports.run = (bot, message) => {
 
   // If the command exists, **AND** the user has permission, run it.
   logger.cmd(`${message.author.username} ran command ${prefix}${command} args:{${args}}`)
-  
+  //var baseCommand = command.split("/").shift() //this is basically the remainder of the command
   try {
-    var prefixArray = [['!','command'],['+','create'],['?','read'],['#','update'],['-','delete']]
-    var prefixMap = new Map(prefixArray)
-    var baseCommand = command.split("/").shift() //this is basically the remainder of the command
-    let routeFile = require(`../routes/${baseCommand}.js`)   
-    
-    routeFile[prefixMap.get(prefix)](bot, message,command, args)
+    let req = {'bot':bot,'message':message,'command':command,'args':args}
+    let router = require(`../routes/${prefixes[prefix]}.js`)
+    router.route(req)
   } catch (err) {
     logger.error(err)
   }

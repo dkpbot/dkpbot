@@ -18,7 +18,7 @@ exports.create = (bot, message, command, args) => {
     matches = command.match(regex)
     if(matches){
         logger.route(`raids > create_user ${matches[1]}`)
-        return raids.create_user(bot, message, matches[1], args)
+        return raids.add_user(bot, message, matches[1], args)
     }
 }
 
