@@ -10,3 +10,11 @@ exports.findNickname = function (bot, message, id) {
     if(member && member.nickname) return member.nickname
     return bot.users.find(x => x.id == id).username   
 }
+
+exports.validateUser = function (user){
+    var regex = /<@(\d*)>/
+    var matches = user.match(regex)
+    if(matches){
+        return matches[1]
+    }else return null
+}

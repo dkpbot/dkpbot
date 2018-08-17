@@ -12,7 +12,7 @@ const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 mongoose.connect(process.env.URI, { useNewUrlParser: true },function(err){
     if(err) logger.error(err)
-    logger.ok('connected to mongodb')
+    logger.ok(`connected to ${mongoose.connection.name} at: ${mongoose.connection.host}`)
 })
 //register mongo schemas
 const user = require('./models/user')

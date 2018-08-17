@@ -3,6 +3,7 @@
 // goes `bot, other, args` when this function is run.
 
 const logger = require('../utils/logger.js')
+const broken = '🤕'
 
 exports.run = (bot, message) => {
   // It's good practice to ignore other bots. This also makes your bot ignore itself
@@ -28,14 +29,13 @@ exports.run = (bot, message) => {
   //rejoin the args into one string. let the controller parse it how it wants
   args = args.join(' ')
 
-  // If the command exists, **AND** the user has permission, run it.
-  logger.cmd(`${message.author.username} ran command ${prefix}${command} args:{${args}}`)
-  //var baseCommand = command.split("/").shift() //this is basically the remainder of the command
+  logger.cmd(`${message.author.username}: ${prefix}${command} ${args}`)
   try {
     let req = {'bot':bot,'message':message,'command':command,'args':args}
     let router = require(`../routes/${prefixes[prefix]}.js`)
     router.route(req)
-  } catch (err) {
-    logger.error(err)
+  } catch (err) { 
+      message.channel.send(`\`\`\`${broken} [ERROR] ${err}\`\`\``)
+      logger.error(err)
   }
 }
