@@ -13,10 +13,7 @@ exports.run = async (req, matches) => {
     logger.debug(matches);
     let raid_id = matches[1]
     let user = utils.validateUser(req.args)
-    if(!user) return req.message.channel.send(`invalid user`)
-    if(user === process.env.BOT){
-        return req.message.channel.send(`BEEP BOOP. robots can't attend raids`)
-    }
+    if(!user || user === process.env.BOT) return req.message.channel.send(`invalid user`)
     //fetch raid
     let r = await Raid.findOne({_id:raid_id}, function(err) {
         if (err) return logger.error(err)
