@@ -19,8 +19,8 @@ exports.run = async (req, matches) => {
         if (err) return logger.error(err)
     })
     if(!r) {
-        logger.warn(`raid ${raid_id} not found`)
-        return req.message.channel.send(`raid ${raid_id} not found`)
+        logger.warn(`invalid raid`)
+        return req.message.channel.send(`invalid raid`)
     }
     //add user
     if(r.users.indexOf(user) === -1){

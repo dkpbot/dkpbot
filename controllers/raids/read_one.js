@@ -13,8 +13,8 @@ exports.run = async (req, matches) => {
     let r = await Raid.findOne({_id:raid_id}, function(err,doc) {
         if (err) return logger.error(err)
         if(!doc){
-            logger.warn(`raid ${raid_id} not found`)
-            return req.message.channel.send(`raid ${raid_id} not found`)
+            logger.warn(`invalid raid`)
+            return req.message.channel.send(`invalid raid`)
         }
         let nicknames = doc.users.map(x => utils.findNickname(req.bot, req.message, x)) 
         const embed = new RichEmbed()
