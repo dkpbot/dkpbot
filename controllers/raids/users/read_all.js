@@ -10,7 +10,6 @@ logger.ok('controllers/raids/users/read_all loaded')
 
 exports.run = async (req, matches) => {
     let raid_id = matches[1]
-    let user_id = matches[2]
     let r = await Raid.findOne({_id:raid_id}, function(err,doc) {
         if (err) return logger.error(err)
 

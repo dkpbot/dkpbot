@@ -3,7 +3,6 @@ const Discord = require('discord.js')
 const bot = new Discord.Client()
 const assert = require('assert')
 const fs = require('fs')
-//const mongo = require('./utils/mongo.js')
 const logger = require ('./utils/logger.js')
 const mongoose = require('mongoose')
 
@@ -15,9 +14,9 @@ mongoose.connect(process.env.URI, { useNewUrlParser: true },function(err){
     logger.ok(`connected to ${mongoose.connection.name} at: ${mongoose.connection.host}`)
 })
 //register mongo schemas
-const user = require('./models/user')
-const raid = require('./models/raid')
 const sequence = require ('./models/sequence')
+//const user = require('./models/user')
+const raid = require('./models/raid')
 
 // This loop reads the /events/ folder and attaches each event file to the appropriate event.
 fs.readdir("./events/", (err, files) => {

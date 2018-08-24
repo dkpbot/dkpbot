@@ -25,7 +25,7 @@ exports.run = async (req, matches) => {
                         `entered by: ${utils.findNickname(req.bot, req.message, doc.enteredby)}\n` +
                         `value: ${doc.value}\n` +
                         `users: [${nicknames}]\n` +
-                        `loots: [${doc.loots}]`)
+                        `loots: [${doc.loots.map(x => x.item)}]`)
         req.message.channel.send(embed)
     })
 }
