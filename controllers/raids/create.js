@@ -10,8 +10,7 @@ logger.ok('controllers/raids/read_one loaded')
 
 exports.run = async (req, matches) => {
     logger.debug(matches)
-    let raid_id = matches[1]
-    
+    let raid_id = matches[1]   
 }
 
 exports.help = async (req, matches) => {

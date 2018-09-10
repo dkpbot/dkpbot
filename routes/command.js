@@ -2,7 +2,6 @@ const logger = require('../utils/logger.js')
 
 var routes = new Map();
 routes.set(/attendance$/, function(req, matches){
-    console.log('hello world')
     const controller = require('../controllers/attendance/command.js')
     controller.run(req, matches)
 })

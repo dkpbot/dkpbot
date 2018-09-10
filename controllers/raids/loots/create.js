@@ -44,18 +44,6 @@ exports.run = async (req, matches) => {
         req.message.channel.send(`raid ${r._id} updated:\n` +
             `${utils.findNickname(req.bot, req.message, userid)} looted ${item}`)
     })
-    //add user
-    /*if(r.users.indexOf(user) === -1){
-        r.users.push(user)
-
-        await r.save( function(err, doc) {
-            if (err) return logger.error(err)
-            req.message.channel.send(`added ${utils.findNickname(req.bot, req.message, user)} ` +
-                                    `to raid '${r.description}' ${r.date.toLocaleDateString()}`)
-        })
-    }else{
-        return req.message.channel.send(`user is already attending this raid`)
-    }*/
 }
 
 exports.help = async (req, matches) => {
