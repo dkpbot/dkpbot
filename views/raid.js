@@ -9,7 +9,7 @@ logger.ok('views/raid loaded')
 exports.send = async(req, raid) => {
     let nicknames = raid.users.map(x => utils.findNickname(req.bot, req.message, x)) 
     const embed = new RichEmbed()
-    .setTitle(`raid: '${raid.description}' ${raid.date.toLocaleDateString()}`)
+    .setTitle(`raid: '${raid.description}'`)
     .setColor(colors.cyan)
     .setDescription(`id: ${raid.id}\n` +
         `date: ${raid.date.toLocaleDateString()}\n` +
