@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 const { Client, RichEmbed } = require('discord.js')
-const logger = require('../../../utils/logger.js')
-const colors = require('../../../utils/colors.js')
-const utils = require('../../../utils/utils')
+const logger = require('../utils/logger.js')
+const colors = require('../utils/colors.js')
+const utils = require('../utils/utils.js')
 //views
-const users_view = require('../../../views/users.js')
-const warning_view = require('../../../views/warning.js')
-const error_view = require('../../../views/error.js')
+const users_view = require('../views/users.js')
+const warning_view = require('../views/warning.js')
+const error_view = require('../views/error.js')
 //models
 const Raid = mongoose.model('Raid')
 

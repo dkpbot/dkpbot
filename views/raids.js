@@ -9,7 +9,7 @@ logger.ok('views/raids loaded')
 exports.send = async(req, raids) => {
     const embed = new RichEmbed()
         .setTitle(`raids`)
-        .setColor(colors.cyan)
+        .setColor(colors.lightblue)
         .setDescription(
             raids.map(x => {
             return `${x.id} [${x.date.toLocaleDateString()}] '${x.description}'`
