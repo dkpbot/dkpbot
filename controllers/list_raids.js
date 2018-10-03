@@ -19,8 +19,10 @@ exports.run = async (req, matches) => {
 
 exports.roles = process.env.USER_ROLES
 
-exports.help = async (req) => {
-    help_view.send(req, 'usage: ?raids')
+exports.help = function(req){
+    let msg = `lists most recent raids\n\n` +
+        `usage: ?raids\n`
+    help_view.send(req, msg)
 }
 
 exports.test = async (req, matches) => {

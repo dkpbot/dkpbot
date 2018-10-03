@@ -11,7 +11,7 @@ exports.send = async(req, raid) => {
         .setColor(colors.cyan)
         .setDescription(
             raid.loots.map(x => {
-            return `${x._id} '${x.item}' ${utils.findNickname(req.bot, req.message, x.user)} ${x.alt || ''}`
+            return `${x._id} '${x.item}' ${utils.findNickname(req, x.user)} ${x.alt || ''}`
         }))
     await req.message.channel.send(embed)
 }

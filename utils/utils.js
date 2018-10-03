@@ -2,19 +2,16 @@
 stick helper functions needed in multiple files here until we find a better way to do it
 */
 
-exports.findNickname = function (bot, message, id) {
+exports.findNickname = function (req, id) {
     //console.log(bot.id || 'null bot')
     //console.log(message.id || 'null message')
     //console.log(id || 'null id')
-    let member = message.guild.members.find(x => x.id == id)
+    let member = req.message.guild.members.find(x => x.id == id)
     if(member && member.nickname) return member.nickname
-    return bot.users.find(x => x.id == id).username   
+    return req.bot.users.find(x => x.id == id).username   
 }
 
 exports.validateUser = function (user){
     var regex = /<@(\d*)>/
-    var matches = user.match(regex)
-    if(matches){
-        return matches[1]
-    }else return null
+    return regex.test(user)
 }

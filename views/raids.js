@@ -12,7 +12,7 @@ exports.send = async(req, raids) => {
         .setColor(colors.lightblue)
         .setDescription(
             raids.map(x => {
-            return `${x.id} [${x.date.toLocaleDateString()}] '${x.description}'`
+            return `${x.id} [${x.date.toLocaleDateString()}] ${x.description}`
         }))
     await req.message.channel.send(embed)
 }

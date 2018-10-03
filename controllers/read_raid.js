@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const logger = require('../utils/logger.js')
 //views
 const raid_view = require('../views/raid.js')
+const help_view = require('../views/help.js')
 const warning_view = require('../views/warning.js')
 const error_view = require('../views/error.js')
 //models
@@ -18,8 +19,12 @@ exports.run = async (req, matches) => {
     await raid_view.send(req, r)
 }
 
-exports.help = async (req, matches) => {
-    
+exports.roles = process.env.USER_ROLES
+
+exports.help = function (req){
+    let msg = `returns details of raid n.\n\n` +
+        `usage: ?raids/n\n`
+    help_view.send(req, msg)
 }
 
 exports.test = async (req, matches) => {

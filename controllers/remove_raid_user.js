@@ -15,10 +15,10 @@ logger.ok('controllers/raids/users/delete loaded')
 
 exports.run = async (req, matches) => {
     //validate args
-    logger.debug(matches);
     let raid_id = matches[1]
-    let user = utils.validateUser(req.args)
-    if(!user || user === process.env.BOT) return warning_view.send(req, "invalid user")
+    let user = req.args
+    if(!utils.validateUser(user)) return warning_view.send(req, "invalid user")
+    if(user === process.env.BOT) return warning_view.send(req, "invalid user")
 
     //fetch raid
     let r = await Raid.findOne({_id:raid_id}, function(err) {
@@ -34,7 +34,7 @@ exports.run = async (req, matches) => {
     await r.save( function(err) {
         if (err) return error_view.send(req, err)
         return ok_view.send(req,
-            `removed ${utils.findNickname(req.bot, req.message, user)} ` +
+            `removed ${user}` +
             `from raid ${r._id} '${r.description}'`)
     })
 }

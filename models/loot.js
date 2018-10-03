@@ -3,7 +3,7 @@ var Schema = mongoose.Schema
 
 var LootSchema = new Schema({
   _id: Number,
-  user: Number,
+  user: String,
   item: String,
   alt: { type: Boolean, default: false }
 })

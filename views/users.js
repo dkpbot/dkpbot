@@ -11,7 +11,7 @@ exports.send = async(req, raid) => {
         .setColor(colors.cyan)
         .setDescription(
             raid.users.map(x => {
-            return `${x} ${utils.findNickname(req.bot, req.message, x)}`
+            return `${x} ${utils.findNickname(req, x)}`
         }))
     await req.message.channel.send(embed)
 }

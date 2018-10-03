@@ -6,6 +6,7 @@ const routes = [
     [/\+raids\/(\d*)\/users$/, './controllers/add_raid_user'],
     [/\+raids$/, '../controllers/add_raid'],
     [/\!attendance$/, './controllers/attendance.js'],
+    [/\!help$/, './controllers/help.js'],
     [/\?raids\/(\d*)\/loots$/, './controllers/list_raid_loots'],
     [/\?raids\/(\d*)\/users$/, './controllers/list_raid_users'],
     [/\?raids$/, './controllers/list_raids.js'],  
@@ -16,6 +17,7 @@ const routes = [
 ]
 
 function can_access(req, controller){
+    if(!controller.roles) return true
     let roles = controller.roles.split(',')
     return roles.some(x => {
         let role = req.message.guild.roles.find("name", x)
