@@ -15,8 +15,9 @@ exports.run = async(req, matches) => {
             }
         }
     })
+    let user = req.message.author.username
 
-    let msg = `hello, i'm dkpbot. you can use special commands in discord to ask me about your dkp!\n\n`
+    let msg = `hail ${user}, i'm dkp bot. you can use special commands in discord to ask me about your dkp!\n\n`
     
     if(isAdmin){
         msg += `parameters:\nn = any positive integer. example: 42\n` +
@@ -30,7 +31,7 @@ exports.run = async(req, matches) => {
         `! : command, + : create, ? : read, #:update, - : delete\n\n` +
         `commands:\n` +
         `!help\n` +
-        `!attendance [raid name]` +
+        //`!attendance [raid name]` +
         //`!dkp <@user>\n` +
         //`?loots <@user>\n` +
         //`?loots [item name]\n` +
@@ -38,19 +39,19 @@ exports.run = async(req, matches) => {
         //`?missing <@user>\n` +
         `?raids\n` +
         `?raids/n\n` +
-        `?raids/n/users\n` + //should delete this
-        `?raids/n/loots\n` + //should delete this   
-        `+raids [raid name]\n` +
+        //`?raids/n/users\n` + //should delete this
+        //`?raids/n/loots\n` + //should delete this   
+        `+raids [raid name] //needs work\n` +
         `+raids/n/users [@user]\n` +
         `+raids/n/loots [@user] [item name]\n` +
-        `#raids/n/name [raid name]\n` +
-        `#raids/n/date [nnnn-nn-nn]\n` +
-        `#raids/n/value [n]\n` +
-        `#loots/n/user [@user]\n` +
-        `#loots/n/item [item name]\n` +
-        `-raids/n\n` +
-        `-raids/n/users [@user]\n` +
-        `-loots [n]\n`
+        //`#raids/n/name [raid name]\n` +
+        //`#raids/n/date [nnnn-nn-nn]\n` +
+        //`#raids/n/value [n]\n` +
+        //`#loots/n/user [@user]\n` +
+        //`#loots/n/item [item name]\n` +
+        `-raids/n // needs work\n` +
+        `-raids/n/users [@user] //needs work\n` +
+        `-loots [n] //needs work\n`
     } else{
         msg +=  `parameters:\nn = any positive integer. example: 42\n` +
         //`[x] = required value you must enter for the command to work\n` +
@@ -60,6 +61,7 @@ exports.run = async(req, matches) => {
         `example: ?raids help\n\n` +
         `commands:\n` +
         `!help\n` +
+        `!attendance [raid name]` +
         //`!dkp <@user>\n` +
         //`?loots <@user>\n` +
         //`?missing <@user>\n` +
@@ -69,6 +71,7 @@ exports.run = async(req, matches) => {
         //`?raids/n/loots`
     }
     help_view.send(req, msg)
+    req.message.channel.send('fuckin progrims')
 }
 
 exports.help = function(req){

@@ -7,11 +7,8 @@ logger.ok('views/users loaded')
 
 exports.send = async(req, raid) => {
     const embed = new RichEmbed()
-        .setTitle(`users: '${raid.description}' ${raid.date.toLocaleDateString()}`)
         .setColor(colors.cyan)
-        .setDescription(
-            raid.users.map(x => {
-            return `${x} ${utils.findNickname(req, x)}`
-        }))
+        .setDescription(`users: '${raid.description}' ${raid.date.toLocaleDateString()}\n` +
+            raid.users)
     await req.message.channel.send(embed)
 }

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { Client, RichEmbed } = require('discord.js')
 const logger = require('../utils/logger.js')
 const colors = require('../utils/colors.js')
-const utils = require('../utils/utils.js')
+const validate = require('../utils/validate.js')
 //views
 const users_view = require('../views/users.js')
 const ok_view = require('../views/ok.js')
@@ -17,7 +17,7 @@ exports.run = async (req, matches) => {
     //validate args
     let raid_id = matches[1]
     let user = req.args
-    if(!utils.validateUser(user)) return warning_view.send(req, "invalid user")
+    if(!validate.user(user)) return warning_view.send(req, "invalid user")
     if(user === process.env.BOT) return warning_view.send(req, "invalid user")
 
     //fetch raid

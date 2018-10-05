@@ -10,8 +10,3 @@ exports.findNickname = function (req, id) {
     if(member && member.nickname) return member.nickname
     return req.bot.users.find(x => x.id == id).username   
 }
-
-exports.validateUser = function (user){
-    var regex = /<@(\d*)>/
-    return regex.test(user)
-}

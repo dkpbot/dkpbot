@@ -4,11 +4,11 @@ const colors = require('../utils/colors.js')
 
 logger.ok('views/error loaded')
 
-exports.send = async(req, text) => {
-    logger.error(text)
+exports.send = async(req, err) => {
+    logger.error(err.stack)
     const embed = new RichEmbed()
     .setTitle(`error:`)
     .setColor(colors.red)
-    .setDescription(`${text}`)
+    .setDescription(`${err}`)
     await req.message.channel.send(embed)
 }
