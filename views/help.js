@@ -4,10 +4,10 @@ const colors = require('../utils/colors.js')
 
 logger.ok('views/help loaded')
 
-exports.send = async(req, text) => {
+exports.send = async (req, text) => {
     const embed = new RichEmbed()
-    .setTitle(`${req.command}`)
-    .setColor(colors.bluegrey)
-    .setDescription(`${text}`)
+        .setTitle(`help`)
+        .setColor(colors.bluegrey)
+        .setDescription(`${text}`)
     await req.message.channel.send(embed)
 }

@@ -7,8 +7,6 @@ const routes = [
     [/\!help$/, './controllers/help.js'],
     [/\?raids$/, './controllers/list_raids.js'],
     [/\?raids\/(\d+)$/, './controllers/read_raid.js'],
-    [/\?raids\/(\d*)\/loots$/, './controllers/list_raid_loots'], //worth keeping?
-    [/\?raids\/(\d*)\/users$/, './controllers/list_raid_users'], //worth keeping?
     //editor
     [/\!attendance$/, './controllers/attendance.js'],
     [/\+raids$/, './controllers/add_raid'],
