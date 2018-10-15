@@ -6,13 +6,13 @@ const utils = require('../utils/utils')
 
 logger.ok('views/raids loaded')
 
-exports.send = async(req, raids) => {
+exports.send = async (req, raids) => {
     const embed = new RichEmbed()
         .setTitle(`raids`)
         .setColor(colors.lightblue)
         .setDescription(
             raids.map(x => {
-            return `${x.id} [${x.date.toLocaleDateString()}] ${x.description}`
-        }))
+                return `${x.id} [${x.date.toLocaleDateString()}] ${x.event}`
+            }))
     await req.message.channel.send(embed)
 }

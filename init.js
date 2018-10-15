@@ -1,9 +1,21 @@
 /*
     initialization code to run once on install
 */
+require('dotenv').config()
+const Discord = require('discord.js')
+const bot = new Discord.Client()
+const fs = require('fs')
+const logger = require('./utils/logger.js')
+
+
+let contents = fs.readFileSync('./init/events.json')
+let parsed = JSON.parse(contents)
+parsed.forEach(x => {
+    logger.debug(x.event)
+})
 
 /*discord
-    * read items and events from init json file
+    * read items and events from init json files
     * create #event channel for each event
     * create @item role for each item
 */

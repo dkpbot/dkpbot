@@ -17,32 +17,32 @@ exports.run = async (req, matches) => {
     //validate args
     let raid_id = matches[1]
     let user = req.args
-    if(!validate.user(user)) return warning_view.send(req, "invalid user")
-    if(user === process.env.BOT) return warning_view.send(req, "invalid user")
+    if (!validate.user(user)) return warning_view.send(req, "invalid user")
+    if (user === process.env.BOT) return warning_view.send(req, "invalid user")
 
     //fetch raid
-    let r = await Raid.findOne({_id:raid_id}, function(err) {
+    let r = await Raid.findOne({ _id: raid_id }, function (err) {
         if (err) return error_view.send(req, err)
     })
-    if(!r) return warning_view.send(req, "invalid raid")
+    if (!r) return warning_view.send(req, "invalid raid")
 
     //remove user
     let index = r.users.indexOf(user)
-    if(index === -1)  return warning_view.send(req, "user did not attend this raid")
+    if (index === -1) return warning_view.send(req, "user did not attend this raid")
 
-    r.users.splice(index,1)
-    await r.save( function(err) {
+    r.users.splice(index, 1)
+    await r.save(function (err) {
         if (err) return error_view.send(req, err)
         return ok_view.send(req,
             `removed ${user}` +
-            `from raid ${r._id} '${r.description}'`)
+            `from raid ${r._id} '${r.event}'`)
     })
 }
 
 exports.help = async (req, matches) => {
-    
+
 }
 
 exports.test = async (req, matches) => {
-    
+
 }

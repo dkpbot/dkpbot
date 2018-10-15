@@ -5,10 +5,10 @@ const utils = require('../utils/utils')
 
 logger.ok('views/users loaded')
 
-exports.send = async(req, raid) => {
+exports.send = async (req, raid) => {
     const embed = new RichEmbed()
         .setColor(colors.cyan)
-        .setDescription(`users: '${raid.description}' ${raid.date.toLocaleDateString()}\n` +
+        .setDescription(`users: '${raid.event}' ${raid.date.toLocaleDateString()}\n` +
             raid.users)
     await req.message.channel.send(embed)
 }

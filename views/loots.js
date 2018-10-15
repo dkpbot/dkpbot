@@ -5,13 +5,13 @@ const utils = require('../utils/utils')
 
 logger.ok('views/loots loaded')
 
-exports.send = async(req, raid) => {
+exports.send = async (req, raid) => {
     const embed = new RichEmbed()
         .setColor(colors.cyan)
         .setDescription(
-            `**loots: '${raid.description}' ${raid.date.toLocaleDateString()}**\n` +
+            `**loots: '${raid.event}' ${raid.date.toLocaleDateString()}**\n` +
             raid.loots.map(x => {
-            return `${x._id} '${x.item}' ${x.user} ${x.alt || ''}`
-        }).join('\n'))
+                return `${x._id} '${x.item}' ${x.user} ${x.alt || ''}`
+            }).join('\n'))
     await req.message.channel.send(embed)
 }

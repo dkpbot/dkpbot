@@ -6,27 +6,29 @@ const help_view = require('../views/help.js')
 const warning_view = require('../views/warning.js')
 const error_view = require('../views/error.js')
 //models
+//const Loot = mongoose.model('Loot')
 const Raid = mongoose.model('Raid')
+
 
 logger.ok('controllers/raids/read_one loaded')
 
 exports.run = async (req, matches) => {
     let raid_id = matches[1]
-    let r = await Raid.findOne({_id:raid_id}, function(err) {
+    let r = await Raid.findOne({ _id: raid_id }, function (err) {
         if (err) return error_view.send(err)
     })
-    if(!r) return warning_view.send(req, `raid ${raid_id} not found`)
+    if (!r) return warning_view.send(req, `raid ${raid_id} not found`)
     await raid_view.send(req, r)
 }
 
 exports.roles = process.env.USER_ROLES
 
-exports.help = function (req){
+exports.help = function (req) {
     let msg = `returns details of raid n.\n\n` +
         `usage: ?raids/n\n`
     help_view.send(req, msg)
 }
 
 exports.test = async (req, matches) => {
-    
+
 }

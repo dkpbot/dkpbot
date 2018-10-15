@@ -1,5 +1,6 @@
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+//const LootSchema = require('./loot.js')
 
 var LootSchema = new Schema({
   _id: Number,
@@ -11,11 +12,11 @@ var LootSchema = new Schema({
 var RaidSchema = new Schema({
   _id: Number,
   date: { type: Date, default: Date.now },
-  description: String,
+  event: String,
   enteredby: String,
   value: Number,
-  users:[String],
-  loots:[LootSchema] 
+  users: [String],
+  loots: [LootSchema]
 })
 
 exports = mongoose.model('Raid', RaidSchema)  

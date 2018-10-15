@@ -35,7 +35,7 @@ exports.run = async (req, matches) => {
             if (err) return error_view.send(req, err)
             return ok_view.send(req,
                 `added ${user} ` +
-                `to raid ${r._id} '${r.description}'`)
+                `to raid ${r._id} '${r.event}'`)
         })
     } else {
         return warning_view.send(req, "user is already attending this raid")
