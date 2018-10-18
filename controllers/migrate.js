@@ -17,14 +17,12 @@ exports.run = async (req, matches) => {
     items = await Item.find({}, function (err) {
         if (err) logger.error(err)
     })
-    //items.forEach(x => logger.debug(x))
 
     raids = []
     //raids
     let raidFile = fs.readFileSync('./migrate/raids.json')
     let raidsParsed = JSON.parse(raidFile)
     raidsParsed.forEach(raid => {
-        //logger.debug(`id: ${x.id}, addedby: ${x.addedby}, date: ${x.date}, event: ${x.event}, value: ${x.value}`)
         let event = events.find(event => event.name == raid.event)
         let r = new Raid({
             _id: raid.id,
@@ -38,7 +36,6 @@ exports.run = async (req, matches) => {
         raids.push(r)
         logger.debug(`adding raid ${r.id}`)
     })
-    //logger.debug(raids)
 
     //raid_users
     let userFile = fs.readFileSync('./migrate/raid_users.json')

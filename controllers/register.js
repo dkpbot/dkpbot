@@ -19,10 +19,6 @@ exports.run = async (req, matches) => {
     if (!eqdkpUser) return warning_view.render(req, "invalid eqdkp user")
     eqdkpUser = eqdkpUser.trim()
 
-    /*await fixAttendance(user, eqdkpUser)
-    await fixLoots(user, eqdkpUser)
-    await fixCreatedBy(user, eqdkpUser)
-    */
     raids = await Raid.find({}, function (err) {
         if (err) return error_view.render(req, err)
     })

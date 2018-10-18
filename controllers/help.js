@@ -54,15 +54,15 @@ const editorResponse = function (req) {
     help_view.render(req, msg)
 }
 const ownerResponse = function (req) {
-    return editorResponse(req)
+    return isEditor(req)
 }
 
 exports.run = async (req, matches) => {
-    if (process.env.OWNER === `<@${req.message.author.id}>`) {
+    /*if (process.env.OWNER === `<@${req.message.author.id}>`) {
         return ownerResponse(req)
-    }
+    }*/
     let editorRoles = process.env.EDITOR_ROLES.split(',')
-    editorResponse = editorRoles.some(x => {
+    let isEditor = editorRoles.some(x => {
         let role = req.message.guild.roles.find("name", x)
         if (role) {
             if (req.message.member.roles.has(role.id)) {
@@ -70,10 +70,10 @@ exports.run = async (req, matches) => {
             }
         }
     })
-    if (editorResponse) return editorResponse(req)
+    if (isEditor) return editorResponse(req)
 
     let userRoles = process.env.USER_ROLES.split(',')
-    isUser = userRoles.some(x => {
+    let isUser = userRoles.some(x => {
         let role = req.message.guild.roles.find("name", x)
         if (role) {
             if (req.message.member.roles.has(role.id)) {
