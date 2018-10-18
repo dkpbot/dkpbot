@@ -6,13 +6,10 @@ const Event = mongoose.model('Event')
 const Item = mongoose.model('Item')
 
 //bot user must have 'magage roles' and 'manage channels' permissions on discord
-
-//remove events
-
 exports.run = async (req, matches) => {
     //remove events
     events = await Event.find({}, function (err) {
-        if (err) return error_view.send(req, err)
+        if (err) return error_view.render(req, err)
     }).sort({ createdTimestamp: - 1 })
     events.forEach(async x => {
         id = x.id.match(/<#(\d*)>$/)[1]
@@ -36,5 +33,3 @@ exports.run = async (req, matches) => {
     })
     logger.debug('un_init complete')
 }
-
-exports.roles = process.env.EDITOR_ROLES

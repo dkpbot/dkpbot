@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-//const LootSchema = require('./loot.js')
 
 var LootSchema = new Schema({
   _id: Number,

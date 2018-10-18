@@ -12,7 +12,7 @@ exports.run = (bot, message) => {
   if (message.author.bot) return
 
   if (!message.guild){
-    return error_view.send(req, "This command is unavailable via private message.")
+    return error_view.render(req, "This command is unavailable via private message.")
   }
 
   let prefixes = ['!','+','?','#','-']
@@ -29,6 +29,6 @@ exports.run = (bot, message) => {
   try {
     router.route(req)
   } catch (err) { 
-      error_view.send(req, err)
+      error_view.render(req, err)
   }
 }

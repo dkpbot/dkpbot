@@ -3,15 +3,6 @@ const logger = require('../utils/logger.js')
 //views
 const ok_view = require('../views/ok.js')
 
-const createRole = async (req, name) => {
-    return req.message.guild.createRole({
-        name: name,
-        color: '0xFF00FF',
-        mentionable: true,
-        permissions: []
-    })
-}
-
 //bot user must have 'magage roles' and 'manage channels' permissions on discord
 exports.run = async (req, matches) => {
     //roles = process.env.ITEMS.split(',')
@@ -37,7 +28,7 @@ exports.run = async (req, matches) => {
             //store item / id tuple in database
         }
     })
-    ok_view.send(req, text)
+    ok_view.render(req, text)
 }
 
 exports.roles = process.env.EDITOR_ROLES

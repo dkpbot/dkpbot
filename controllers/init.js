@@ -71,5 +71,3 @@ exports.run = async (req, matches) => {
 
     logger.debug('init complete')
 }
-
-exports.roles = process.env.EDITOR_ROLES

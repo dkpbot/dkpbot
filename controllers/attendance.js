@@ -1,8 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 const logger = require('../utils/logger.js')
-const colors = require('../utils/colors.js')
-const utils = require('../utils/utils.js')
 //views
 const attendance_view = require('../views/attendance.js')
 const raid_view = require('../views/raid.js')
@@ -13,18 +11,15 @@ const error_view = require('../views/error.js')
 const Raid = mongoose.model('Raid')
 const Sequence = mongoose.model('Sequence')
 
-logger.ok('controllers/attendance/command loaded')
-
-//var active = false
 const thumbsup = "👍"
 
 exports.run = async (req, matches) => {
-    if (!req.args) return warning_view.send(req, "invalid parameters")
-    //if(active) return warning_view.send(req, 'only one rollcall may be active at a time')
+    if (!req.args) return warning_view.render(req, "invalid parameters")
+    //if(active) return warning_view.render(req, 'only one rollcall may be active at a time')
     //active = true
     //message.delete(0)
 
-    let msg = await attendance_view.send(req, req.args)
+    let msg = await attendance_view.render(req, req.args)
     await msg.react(thumbsup)
     const reactions = await msg.awaitReactions(
         reaction => reaction.emoji.name === thumbsup, { time: 30000 })
@@ -46,17 +41,16 @@ exports.run = async (req, matches) => {
 
     //active = false
     await r.save(function (err) {
-        if (err) return error_view.send(req, err)
+        if (err) return error_view.render(req, err)
     })
-    raid_view.send(req, r)
+    raid_view.render(req, r)
 }
-exports.roles = process.env.EDITOR_ROLES
 
 exports.help = function (req) {
     let msg = `creates a new raid and adds all users that react with a ${thumbsup} after a short time.\n\n` +
         `usage: !attendance [raid name]\n`
 
-    help_view.send(req, msg)
+    help_view.render(req, msg)
 }
 
 exports.test = async () => {

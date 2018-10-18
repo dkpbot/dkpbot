@@ -23,30 +23,31 @@ exports.run = async (req, matches) => {
     //raids
     let raidFile = fs.readFileSync('./migrate/raids.json')
     let raidsParsed = JSON.parse(raidFile)
-    raidsParsed.forEach(x => {
+    raidsParsed.forEach(raid => {
         //logger.debug(`id: ${x.id}, addedby: ${x.addedby}, date: ${x.date}, event: ${x.event}, value: ${x.value}`)
-        let event = events.find(e => e.name == x.event)
-        let raid = new Raid({
-            _id: x.id,
-            date: moment(x.date),
+        let event = events.find(event => event.name == raid.event)
+        let r = new Raid({
+            _id: raid.id,
+            date: moment(raid.date),
             event: event.id,
-            enteredby: x.addedby,
+            enteredby: raid.addedby,
             users: [],
             loots: [],
-            value: x.value || 1
+            value: raid.value || 1
         })
-        raids.push(raid)
-        logger.debug(`adding raid ${raid.id}`)
+        raids.push(r)
+        logger.debug(`adding raid ${r.id}`)
     })
     //logger.debug(raids)
 
     //raid_users
     let userFile = fs.readFileSync('./migrate/raid_users.json')
-    let users = JSON.parse(userFile)
+    let usersParsed = JSON.parse(userFile)
+    users = [...new Set(usersParsed)]
     raids.forEach(raid => {
-        users.forEach(ru => {
-            if (raid._id == ru.raid_id) {
-                raid.users.push(ru.user)
+        users.forEach(user => {
+            if (raid._id == user.raid_id) {
+                raid.users.push(user.user)
             }
         })
         logger.debug(`adding users to raid ${raid.id}`)
@@ -56,14 +57,14 @@ exports.run = async (req, matches) => {
     let lootFile = fs.readFileSync('./migrate/raid_loots.json')
     let loots = JSON.parse(lootFile)
     raids.forEach(raid => {
-        loots.forEach(rl => {
-            if (raid._id == rl.raid_id) {
-                let alt = rl.itempool == 'DKP' ? false : true
-                let item = items.find(i => i.name.toLowerCase() == rl.item.toLowerCase().trim())
+        loots.forEach(loot => {
+            if (raid._id == loot.raid_id) {
+                let alt = loot.itempool == 'DKP' ? false : true
+                let item = items.find(i => i.name.toLowerCase() == loot.item.toLowerCase().trim())
                 if (item) {
-                    var loot = { _id: rl.id, user: rl.user, item: item.id, alt: alt }
+                    var loot = { _id: loot.id, user: loot.user, item: item.id, alt: alt }
                 } else {
-                    var loot = { _id: rl.id, user: rl.user, item: rl.item, alt: alt }
+                    var loot = { _id: loot.id, user: loot.user, item: loot.item, alt: alt }
                 }
                 raid.loots.push(loot)
             }
@@ -79,5 +80,3 @@ exports.run = async (req, matches) => {
     Sequence.updateOne({ _id: 'loots' }, { n: raids[loots.length - 1].id + 1 })
     logger.debug('migration finished')
 }
-
-exports.roles = process.env.EDITOR_ROLES

@@ -4,10 +4,10 @@ class for easy and aesthetically pleasing console logging
 const chalk = require("chalk")
 const moment = require("moment")
 
-exports.route = (content) => {
-  const type = 'route'
+exports.view = (content) => {
+  const type = 'view'
   const timestamp = `[${moment().format("YYYY-MM-DD HH:mm:ss")}]:`
-  return console.log(`${timestamp} [${chalk.keyword('orange')(type.toUpperCase())}] ${content}`)
+  return console.log(`${timestamp} [${chalk.magenta(type.toUpperCase())}] ${content}`)
 }
 exports.ok = (content) => {
   const type = 'ok'
@@ -17,7 +17,7 @@ exports.ok = (content) => {
 exports.warn = (content) => {
   const type = 'warn'
   const timestamp = `[${moment().format("YYYY-MM-DD HH:mm:ss")}]:`
-  return console.log(`${timestamp} [${chalk.yellow(type.toUpperCase())}] ${content}`)
+  return console.log(`${timestamp} [${chalk.keyword('orange')(type.toUpperCase())}] ${content}`)
 }
 exports.error = (content) => {
   const type = 'error'
@@ -32,5 +32,5 @@ exports.cmd = (content) => {
 exports.debug = (content) => {
   const type = 'debug'
   const timestamp = `[${moment().format("YYYY-MM-DD HH:mm:ss")}]:`
-  return console.log(`${timestamp} [${chalk.magenta(type.toUpperCase())}] ${content}`)
+  return console.log(`${timestamp} [${chalk.white(type.toUpperCase())}] ${content}`)
 }
