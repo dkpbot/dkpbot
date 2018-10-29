@@ -28,13 +28,14 @@ router.add(/\!attendance$/, './controllers/attendance', 'editor')
 router.add(/\+raids$/, './controllers/add_raid', 'editor')
 router.add(/\+raids\/(\d*)\/loots$/, './controllers/add_raid_loot', 'editor')
 router.add(/\+raids\/(\d*)\/users$/, './controllers/add_raid_user', 'editor')
-router.add(/-raids\/(\d*)\/loots$/, './controllers/remove_raid_loot', 'editor')
-router.add(/-raids\/(\d*)\/users$/, './controllers/remove_raid_user', 'editor')
+router.add(/-raids$/, './controllers/delete_raid', 'editor')
+router.add(/-raids\/(\d*)\/loots$/, './controllers/delete_raid_loot', 'editor')
+router.add(/-raids\/(\d*)\/users$/, './controllers/delete_raid_user', 'editor')
 router.add(/\+item$/, './controllers/add_item', 'owner')
 router.add(/\!uninit$/, './controllers/un_init', 'owner')
 router.add(/\!init$/, './controllers/init', 'owner')
 router.add(/\!migrate$/, './controllers/migrate', 'owner')
-router.add(/\!register$/, './controllers/register.js', 'owner')
+router.add(/\!register$/, './controllers/register', 'owner')
 
 //register discord event handlers
 fs.readdir('./events/', (err, files) => {

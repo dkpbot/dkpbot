@@ -56,13 +56,6 @@ exports.run = async (req, matches) => {
         raids[index].users.push(ru.user)
     })
 
-    /*raids.forEach(raid => {
-        raid_users.forEach(raid_user => {
-            if (raid._id == raid_user.raid_id) {
-                raid.users.push(raid_user.user)
-            }
-        })
-    })*/
     console.timeEnd('raid_users')
 
     //raid_loots
@@ -88,21 +81,6 @@ exports.run = async (req, matches) => {
         }
         raids[index].loots.push(loot)
     })
-    /*raids.forEach(raid => {
-        loots.forEach(loot => {
-            if (raid._id == loot.raid_id) {
-                let alt = loot.itempool == 'DKP' ? false : true
-                let item = items.find(i => i.name.toLowerCase() == loot.item.toLowerCase().trim())
-                if (item) {
-                    var loot = { _id: loot.id, user: loot.user, item: item.id, alt: alt }
-                } else {
-                    var loot = { _id: loot.id, user: loot.user, item: loot.item, alt: alt }
-                }
-                raid.loots.push(loot)
-            }
-        })
-
-    })*/
 
     //save to db
     logger.debug(`saving to database`)
