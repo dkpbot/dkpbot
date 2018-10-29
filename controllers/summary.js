@@ -22,15 +22,15 @@ exports.run = async (req, matches) => {
         //users: user,
         date: { '$gte': moment().subtract(90, 'days') }
     }
-    raids = await Raid.find(conditions, function (err) {
+    let raids = await Raid.find(conditions, function (err) {
         if (err) return error_view.render(req, err)
-    })
+    }).sort({ date: -1 })
 
-    maxdkp = raids
+    let maxdkp = raids
         .map(x => x.value)
         .reduce((acc, val) => acc + val, 0)
 
-    dkp = raids
+    let dkp = raids
         .map(x => {
             if (x.users.includes(user)) {
                 return x.value
@@ -39,7 +39,7 @@ exports.run = async (req, matches) => {
         })
         .reduce((acc, val) => acc + val, 0)
 
-    loots = []
+    let loots = []
     raids.forEach(raid => {
         raid.loots.forEach(loot => {
             if (loot.user == user) {

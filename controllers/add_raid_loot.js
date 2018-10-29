@@ -41,7 +41,7 @@ exports.run = async (req, matches) => {
         if (err) return error_view.render(req, err)
         ok_view.render(req,
             `raid ${r._id} updated:\n` +
-            `${user} looted a shiny '${item}'`)
+            `${user} looted a shiny ${alt == true ? item + '(alt)' : item}`)
     })
 }
 

@@ -14,8 +14,8 @@ const Sequence = mongoose.model('Sequence')
 exports.run = async (req, matches) => {
     //parse args
     let args = req.args.split(',')
-    let description = args.shift().trim()
-    if (!validate.channel(description)) return warning_view.render(req, "invalid raid. please use #raid-name")
+    let event = args.shift().trim()
+    if (!validate.channel(event)) return warning_view.render(req, "invalid raid. please use #raid-name")
     if (args.length > 0) {
         var date = args.shift().trim()
         date = moment(date, 'YYYY-MM-DD')
@@ -24,7 +24,7 @@ exports.run = async (req, matches) => {
     if (args.length > 0) {
         var value = args.shift().trim()
     }
-    logger.debug(description)
+    logger.debug(event)
     logger.debug(date || moment())
     logger.debug(value || 1)
 
@@ -32,7 +32,7 @@ exports.run = async (req, matches) => {
     let r = new Raid({
         _id: seq.n,
         date: Date.parse(date) || Date.now(),
-        description: description,
+        event: event,
         enteredby: `<@${req.message.author.id}>`,
         users: [],
         loots: [],

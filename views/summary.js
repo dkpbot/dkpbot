@@ -7,7 +7,7 @@ exports.render = (req, user, maxdkp, dkp, loots) => {
     text += `attendance: ${dkp}/${maxdkp} (${parseInt(dkp / maxdkp * 100)}%)\n`
     text += `loots:\n`
     loots.forEach(loot => {
-        text += `${loot.id} ${loot.date.toLocaleDateString()} ${loot.alt == true ? loot.item + '(alt)' : loot.item}\n`
+        text += `${loot.date.toLocaleDateString()} ${loot.alt == true ? loot.item + '(alt)' : loot.item}\n`
     })
     const embed = new RichEmbed()
         .setColor(colors.lightblue)

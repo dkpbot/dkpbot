@@ -15,14 +15,11 @@ const thumbsup = "👍"
 
 exports.run = async (req, matches) => {
     if (!req.args) return warning_view.render(req, "invalid parameters")
-    //if(active) return warning_view.render(req, 'only one rollcall may be active at a time')
-    //active = true
-    //message.delete(0)
 
     let msg = await attendance_view.render(req, req.args)
     await msg.react(thumbsup)
     const reactions = await msg.awaitReactions(
-        reaction => reaction.emoji.name === thumbsup, { time: 30000 })
+        reaction => reaction.emoji.name === thumbsup, { time: 300000 })
     let thumbreactions = await reactions.get(thumbsup)
     let users = thumbreactions.users.array().filter(x => x != process.env.BOT)
     await msg.delete()
@@ -32,14 +29,12 @@ exports.run = async (req, matches) => {
     let r = new Raid({
         _id: seq.n,
         date: Date.now(),
-        description: req.args,
+        event: req.args,
         enteredby: `<@${req.message.author.id}>`,
         users: users,
         loots: [],
         value: 1
     })
-
-    //active = false
     await r.save(function (err) {
         if (err) return error_view.render(req, err)
     })

@@ -14,14 +14,16 @@ exports.run = async (req, matches) => {
     events = await Event.find({}, function (err) {
         if (err) logger.error(err)
     })
+
     items = await Item.find({}, function (err) {
         if (err) logger.error(err)
     })
 
-    raids = []
     //raids
+    raids = []
     let raidFile = fs.readFileSync('./migrate/raids.json')
     let raidsParsed = JSON.parse(raidFile)
+    logger.debug(`adding ${raidsParsed.length} raids`)
     raidsParsed.forEach(raid => {
         let event = events.find(event => event.name == raid.event)
         let r = new Raid({
@@ -34,26 +36,59 @@ exports.run = async (req, matches) => {
             value: raid.value || 1
         })
         raids.push(r)
-        logger.debug(`adding raid ${r.id}`)
     })
 
     //raid_users
     let userFile = fs.readFileSync('./migrate/raid_users.json')
-    let usersParsed = JSON.parse(userFile)
-    users = [...new Set(usersParsed)]
-    raids.forEach(raid => {
-        users.forEach(user => {
-            if (raid._id == user.raid_id) {
-                raid.users.push(user.user)
+    let raid_users = JSON.parse(userFile)
+    logger.debug(`adding ${raid_users.length} raid_users`)
+    console.time('raid_users')
+    let index = 0
+    raid_users.forEach(ru => {
+        if (ru.raid_id != raids[index]._id) {
+            for (i = index; i < raids.length; i++) {
+                if (raids[i]._id == ru.raid_id) {
+                    index = i
+                    break
+                }
+            }
+        }
+        raids[index].users.push(ru.user)
+    })
+
+    /*raids.forEach(raid => {
+        raid_users.forEach(raid_user => {
+            if (raid._id == raid_user.raid_id) {
+                raid.users.push(raid_user.user)
             }
         })
-        logger.debug(`adding users to raid ${raid.id}`)
-    })
+    })*/
+    console.timeEnd('raid_users')
 
     //raid_loots
     let lootFile = fs.readFileSync('./migrate/raid_loots.json')
     let loots = JSON.parse(lootFile)
-    raids.forEach(raid => {
+    logger.debug(`adding ${loots.length} loots`)
+    index = 0
+    loots.forEach(loot => {
+        if (loot.raid_id != raids[index]._id) {
+            for (i = index; i < raids.length; i++) {
+                if (raids[i]._id == loot.raid_id) {
+                    index = i
+                    break
+                }
+            }
+        }
+        let alt = loot.itempool == 'DKP' ? false : true
+        let item = items.find(i => i.name.toLowerCase() == loot.item.toLowerCase().trim())
+        if (item) {
+            var loot = { _id: loot.id, user: loot.user, item: item.id, alt: alt }
+        } else {
+            var loot = { _id: loot.id, user: loot.user, item: loot.item, alt: alt }
+        }
+        raids[index].loots.push(loot)
+    })
+    /*raids.forEach(raid => {
         loots.forEach(loot => {
             if (raid._id == loot.raid_id) {
                 let alt = loot.itempool == 'DKP' ? false : true
@@ -66,14 +101,21 @@ exports.run = async (req, matches) => {
                 raid.loots.push(loot)
             }
         })
-        logger.debug(`adding loots to raid ${raid.id}`)
-    })
+
+    })*/
+
     //save to db
-    Raid.insertMany(raids, function (err) {
+    logger.debug(`saving to database`)
+    await Raid.insertMany(raids, function (err) {
         if (err) return logger.error(err)
     })
+
     //set sequence counters
-    Sequence.updateOne({ _id: 'raids' }, { n: raids[raids.length - 1].id + 1 })
-    Sequence.updateOne({ _id: 'loots' }, { n: raids[loots.length - 1].id + 1 })
+    await Sequence.updateOne({ _id: 'raids' }, { n: parseInt(raids[raids.length - 1].id) + 1 }, function (err) {
+        if (err) logger.error(err)
+    })
+    await Sequence.updateOne({ _id: 'loots' }, { n: loots[loots.length - 1].id + 1 }, function (err) {
+        if (err) logger.error(err)
+    })
     logger.debug('migration finished')
 }
