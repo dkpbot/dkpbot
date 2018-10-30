@@ -23,7 +23,7 @@ exports.run = async (req, matches) => {
     let msg = await attendance_view.render(req, event)
     await msg.react(thumbsup)
     const reactions = await msg.awaitReactions(
-        reaction => reaction.emoji.name === thumbsup, { time: 30000 })
+        reaction => reaction.emoji.name === thumbsup, { time: 300000 })
     let thumbreactions = await reactions.get(thumbsup)
     let users = thumbreactions.users.array().filter(x => x != process.env.BOT)
     await msg.delete()
