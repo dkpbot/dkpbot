@@ -15,11 +15,15 @@ const thumbsup = "👍"
 
 exports.run = async (req, matches) => {
     if (!req.args) return warning_view.render(req, "invalid parameters")
-
-    let msg = await attendance_view.render(req, req.args)
+    let args = req.args.split(',')
+    let event = args.shift().trim()
+    if (args.length > 0) {
+        var value = Number.parseInt(args[0].trim())
+    }
+    let msg = await attendance_view.render(req, event)
     await msg.react(thumbsup)
     const reactions = await msg.awaitReactions(
-        reaction => reaction.emoji.name === thumbsup, { time: 300000 })
+        reaction => reaction.emoji.name === thumbsup, { time: 30000 })
     let thumbreactions = await reactions.get(thumbsup)
     let users = thumbreactions.users.array().filter(x => x != process.env.BOT)
     await msg.delete()
@@ -29,11 +33,11 @@ exports.run = async (req, matches) => {
     let r = new Raid({
         _id: seq.n,
         date: Date.now(),
-        event: req.args,
+        event: event,
         enteredby: `<@${req.message.author.id}>`,
         users: users,
         loots: [],
-        value: 1
+        value: value || 1
     })
     await r.save(function (err) {
         if (err) return error_view.render(req, err)
