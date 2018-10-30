@@ -8,9 +8,9 @@ let routes = []
 const canAccess = function (req, access) {
     if (access == 'all') return true
     if (access == 'user') {
-        let roles = process.env.USER_ROLES.split(',')
-        return roles.some(x => {
-            let role = req.message.guild.roles.find("name", x)
+        let userRoles = process.env.USER_ROLES.split(',')
+        return userRoles.some(userRole => {
+            let role = req.message.guild.roles.find(x => x.name === userRole)
             if (role) {
                 if (req.message.member.roles.has(role.id)) {
                     return true;
@@ -19,9 +19,9 @@ const canAccess = function (req, access) {
         })
     }
     if (access == 'editor') {
-        let roles = process.env.EDITOR_ROLES.split(',')
-        return roles.some(x => {
-            let role = req.message.guild.roles.find("name", x)
+        let editorRoles = process.env.EDITOR_ROLES.split(',')
+        return editorRoles.some(editorRole => {
+            let role = req.message.guild.roles.find(x => x.name === editorRole)
             if (role) {
                 if (req.message.member.roles.has(role.id)) {
                     return true;
