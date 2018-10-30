@@ -10,16 +10,25 @@ const Raid = mongoose.model('Raid')
 
 exports.run = async (req, matches) => {
     //validate args
-    let raidId = req.args
-    if (raidId.trim() === '') return warning_view.render(req, 'invalid raid')
-    if (isNaN(raidId)) return warning_view.render(req, 'invalid raid')
+    let id = req.args
+    if (id.trim() === '') return warning_view.render(req, 'invalid raid')
+    if (isNaN(id)) return warning_view.render(req, 'invalid raid')
 
     //delete raid
-    let raid = await Raid.findByIdAndDelete(raidId, function (err) {
+    let raid = await Raid.findOne({ _id: id }, function (err, res) {
         if (err) return error_view.render(req, err)
     })
-    if (raid) return ok_view.render(req, `raid ${raidId} deleted`)
-    return warning_view.render(req, `raid ${raidId} does not exist`)
+    logger.debug(raid)
+    if (raid) {
+        await Raid.deleteOne({ _id: id }, function (err, res) {
+            if (err) return error_view.render(req, err)
+        })
+    }
+    else {
+        return warning_view.render(req, `raid ${id} does not exist`)
+    }
+    return ok_view.render(req, `raid ${id} deleted`)
+
 }
 
 exports.help = async (req, matches) => {
