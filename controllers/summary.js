@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
 const moment = require('moment')
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 const validate = require('../utils/validate.js')
+const cast = require('../utils/cast.js')
+const parse = require('../utils/parse.js')
 //views
 const summary_view = require('../views/summary.js')
 const warning_view = require('../views/warning.js')
@@ -13,11 +15,12 @@ exports.run = async (req, matches) => {
     //validate args
     let user = req.args
     if (!user) {
-        user = `<@${req.message.author.id}>`
+        user = req.message.author.id
+    } else {
+        if (!validate.user(user)) return warning_view.render(req, "invalid user")
+        if (user === process.env.BOT) return warning_view.render(req, "invalid user")
+        user = parse.user(user)
     }
-    if (!validate.user(user)) return warning_view.render(req, "invalid user")
-    if (user === process.env.BOT) return warning_view.render(req, "invalid user")
-
     let conditions = {
         //users: user,
         date: { '$gte': moment().subtract(90, 'days') }
@@ -44,6 +47,7 @@ exports.run = async (req, matches) => {
         raid.loots.forEach(loot => {
             if (loot.user == user) {
                 loot.date = raid.date
+                loot.raidid = raid._id
                 loots.push(loot)
             }
         })

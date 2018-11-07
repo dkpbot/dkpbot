@@ -5,13 +5,13 @@ require('dotenv').config()
 const Discord = require('discord.js')
 const bot = new Discord.Client()
 const fs = require('fs')
-const logger = require('./utils/logger.js')
+const log = require('./utils/log.js')
 
 
 let contents = fs.readFileSync('./init/events.json')
 let parsed = JSON.parse(contents)
 parsed.forEach(x => {
-    logger.debug(x.event)
+    log.debug(x.event)
 })
 
 /*discord

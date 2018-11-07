@@ -1,5 +1,5 @@
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 
 module.exports.run = function (bot, err) {
-    logger.error(`Discord timeout`)
+    log.error(`Discord timeout`)
 }

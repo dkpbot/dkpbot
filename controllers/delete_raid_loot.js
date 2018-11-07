@@ -1,7 +1,7 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-const logger = require('../utils/logger.js')
-const validate = require('../utils/validate.js')
+const log = require('../utils/log.js')
+const cast = require('../utils/cast.js')
 //views
 const ok_view = require('../views/ok.js')
 const help_view = require('../views/help.js')
@@ -17,7 +17,8 @@ exports.run = async (req, matches) => {
     if (req.args === '') return warning_view.render(req, "invalid parameters")
     let lootId = req.args.trim()
     let raidId = matches[1]
-
+    log.debug(`lootId: ${lootId}`)
+    log.debug(`raidId: ${raidId}`)
     //fetch raid
     let r = await Raid.findOne({ _id: raidId }, function (err) {
         if (err) return error_view.render(req, err)
@@ -38,8 +39,8 @@ exports.run = async (req, matches) => {
     await r.save(function (err) {
         if (err) return error_view.render(req, err)
         return ok_view.render(req,
-            `removed loot ${lootId}` +
-            `from raid ${r._id} ${r.event}`)
+            `removed loot ${lootId} ` +
+            `from raid ${r._id} ${cast.channel(r.event)}`)
     })
 }
 

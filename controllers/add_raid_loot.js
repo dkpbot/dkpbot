@@ -1,7 +1,9 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 const validate = require('../utils/validate.js')
+const parse = require('../utils/parse.js')
+const cast = require('../utils/cast.js')
 //views
 const ok_view = require('../views/ok.js')
 const help_view = require('../views/help.js')
@@ -19,8 +21,10 @@ exports.run = async (req, matches) => {
     let user = args.shift().trim()
     if (!validate.user(user)) return warning_view.render(req, "invalid user")
     if (user === process.env.BOT) return warning_view.render(req, "invalid user")
+    user = parse.user(user)
     let item = args.shift().trim()
     if (!validate.role(item)) return warning_view.render(req, "invalid item")
+    item = parse.role(item)
     let alt = false
     if (args.length > 0) {
         alt = args.shift().trim()
@@ -39,10 +43,11 @@ exports.run = async (req, matches) => {
     r.loots.push({ _id: seq.n, user: user, item: item, alt: alt })
     await r.save(function (err) {
         if (err) return error_view.render(req, err)
-        ok_view.render(req,
-            `raid ${r._id} updated:\n` +
-            `${user} looted a shiny ${alt == true ? item + '(alt)' : item}`)
+
     })
+    ok_view.render(req,
+        `raid ${r._id} updated:\n` +
+        `${cast.user(user)} looted a shiny ${alt == true ? cast.role(item) + '(alt)' : cast.role(item)}`)
 }
 
 exports.help = async (req, matches) => {

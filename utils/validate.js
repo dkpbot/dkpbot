@@ -1,14 +1,14 @@
 exports.user = function (user) {
-    var regex = /<@(\d*)>$/
+    var regex = /<@!?(\d*)>$/
     return regex.test(user)
 }
 
-exports.channel = function (user) {
+exports.channel = function (channel) {
     var regex = /<#(\d*)>$/
-    return regex.test(user)
+    return regex.test(channel)
 }
 
-exports.role = function (user) {
+exports.role = function (role) {
     var regex = /<@&(\d*)>$/
-    return regex.test(user)
+    return regex.test(role)
 }

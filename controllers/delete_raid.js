@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 const validate = require('../utils/validate.js')
 //views
 const ok_view = require('../views/ok.js')
@@ -18,7 +18,7 @@ exports.run = async (req, matches) => {
     let raid = await Raid.findOne({ _id: id }, function (err, res) {
         if (err) return error_view.render(req, err)
     })
-    logger.debug(raid)
+
     if (raid) {
         await Raid.deleteOne({ _id: id }, function (err, res) {
             if (err) return error_view.render(req, err)

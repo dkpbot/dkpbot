@@ -1,5 +1,5 @@
 require('dotenv').config()
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 //views
 const help_view = require('../views/help.js')
 
@@ -90,5 +90,5 @@ exports.help = function (req) {
 }
 
 exports.test = async () => {
-    logger.debug('command.test')
+    log.debug('command.test')
 }

@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 const moment = require("moment")
 const validate = require('../utils/validate.js')
+const parse = require('../utils/parse.js')
 //views
 const raid_view = require('../views/raid.js')
 const warning_view = require('../views/warning.js')
@@ -16,6 +17,7 @@ exports.run = async (req, matches) => {
     let args = req.args.split(',')
     let event = args.shift().trim()
     if (!validate.channel(event)) return warning_view.render(req, "invalid raid. please use #raid-name")
+    event = parse.channel(event)
     if (args.length > 0) {
         var date = args.shift().trim()
         date = moment(date, 'YYYY-MM-DD')
@@ -24,16 +26,13 @@ exports.run = async (req, matches) => {
     if (args.length > 0) {
         var value = args.shift().trim()
     }
-    logger.debug(event)
-    logger.debug(date || moment())
-    logger.debug(value || 1)
 
     let seq = await Sequence.findOneAndUpdate({ _id: 'raids' }, { $inc: { n: 1 } })
     let r = new Raid({
         _id: seq.n,
         date: Date.parse(date) || Date.now(),
         event: event,
-        enteredby: `<@${req.message.author.id}>`,
+        enteredby: `${req.message.author.id}`,
         users: [],
         loots: [],
         value: value || 1

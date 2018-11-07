@@ -1,11 +1,12 @@
-require('dotenv').config()
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
+const validate = require('../utils/validate.js')
+const parse = require('../utils/parse.js')
+const cast = require('../utils/cast.js')
 //views
 const ok_view = require('../views/ok.js')
 
 //bot user must have 'magage roles' and 'manage channels' permissions on discord
 exports.run = async (req, matches) => {
-    //roles = process.env.ITEMS.split(',')
     let text = '';
     items = req.args.split(',')
     items.forEach(async x => {
@@ -13,8 +14,8 @@ exports.run = async (req, matches) => {
         x = x.replace("\n", "")
         let role = await req.message.guild.roles.find('name', x)
         if (role) {
-            logger.warn(`role exists: "${x}" <@&${role.id}>`)
-            text += `role exists: <@&${role.id}>\n`
+            log.warn(`role exists: "${x}" ${cast.role(role.id)}`)
+            text += `role exists: ${cast.role(role.id)}\n`
         }
         else {
             let role = await req.message.guild.createRole({
@@ -23,12 +24,10 @@ exports.run = async (req, matches) => {
                 mentionable: true,
                 permissions: []
             })
-            logger.ok(`creating role: "${x}" <@&${role.id}>`)
-            text += `creating role: <@&${role.id}>\n`
+            log.ok(`creating role: "${x}" ${cast.role(role.id)}`)
+            text += `creating role: ${cast.role(role.id)}\n`
             //store item / id tuple in database
         }
     })
     ok_view.render(req, text)
 }
-
-exports.roles = process.env.EDITOR_ROLES

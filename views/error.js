@@ -1,5 +1,5 @@
 const { RichEmbed } = require('discord.js')
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 const colors = require('../utils/colors.js')
 
 exports.render = (req, err) => {
@@ -8,7 +8,7 @@ exports.render = (req, err) => {
         .setColor(colors.red)
         .setDescription(`${err}`)
     req.message.channel.send(embed)
-    logger.view('rendering view: error')
-    logger.error(err.stack)
+    log.view('rendering view: error')
+    log.error(err.stack)
 
 }

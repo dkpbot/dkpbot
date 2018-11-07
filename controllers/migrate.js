@@ -1,6 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 const fs = require('fs')
 const moment = require('moment')
 //models
@@ -12,18 +12,18 @@ const Sequence = mongoose.model('Sequence')
 //bot user must have 'magage roles' and 'manage channels' permissions on discord
 exports.run = async (req, matches) => {
     events = await Event.find({}, function (err) {
-        if (err) logger.error(err)
+        if (err) log.error(err)
     })
 
     items = await Item.find({}, function (err) {
-        if (err) logger.error(err)
+        if (err) log.error(err)
     })
 
     //raids
     raids = []
     let raidFile = fs.readFileSync('./migrate/raids.json')
     let raidsParsed = JSON.parse(raidFile)
-    logger.debug(`adding ${raidsParsed.length} raids`)
+    log.debug(`adding ${raidsParsed.length} raids`)
     raidsParsed.forEach(raid => {
         let event = events.find(event => event.name == raid.event)
         let r = new Raid({
@@ -41,7 +41,7 @@ exports.run = async (req, matches) => {
     //raid_users
     let userFile = fs.readFileSync('./migrate/raid_users.json')
     let raid_users = JSON.parse(userFile)
-    logger.debug(`adding ${raid_users.length} raid_users`)
+    log.debug(`adding ${raid_users.length} raid_users`)
     console.time('raid_users')
     let index = 0
     raid_users.forEach(ru => {
@@ -61,7 +61,7 @@ exports.run = async (req, matches) => {
     //raid_loots
     let lootFile = fs.readFileSync('./migrate/raid_loots.json')
     let loots = JSON.parse(lootFile)
-    logger.debug(`adding ${loots.length} loots`)
+    log.debug(`adding ${loots.length} loots`)
     index = 0
     loots.forEach(loot => {
         if (loot.raid_id != raids[index]._id) {
@@ -83,17 +83,17 @@ exports.run = async (req, matches) => {
     })
 
     //save to db
-    logger.debug(`saving to database`)
+    log.debug(`saving to database`)
     await Raid.insertMany(raids, function (err) {
-        if (err) return logger.error(err)
+        if (err) return log.error(err)
     })
 
     //set sequence counters
     await Sequence.updateOne({ _id: 'raids' }, { n: parseInt(raids[raids.length - 1].id) + 1 }, function (err) {
-        if (err) logger.error(err)
+        if (err) log.error(err)
     })
     await Sequence.updateOne({ _id: 'loots' }, { n: loots[loots.length - 1].id + 1 }, function (err) {
-        if (err) logger.error(err)
+        if (err) log.error(err)
     })
-    logger.debug('migration finished')
+    log.debug('migration finished')
 }

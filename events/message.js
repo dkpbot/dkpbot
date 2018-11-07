@@ -2,7 +2,7 @@
 // Note that due to the binding of bot to every event, every event
 // goes `bot, other, args` when this function is run.
 
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 const router = require('../router.js')
 //views
 const error_view = require('../views/error.js')
@@ -24,7 +24,7 @@ exports.run = (bot, message) => {
   let command = args.shift().toLowerCase()
   args = args.join(' ')
 
-  logger.cmd(`${message.author.username}: ${command} ${args}`)
+  log.cmd(`${message.author.username}: ${command} ${args}`)
   let req = {'bot':bot,'message':message,'command':command,'args':args}
   try {
     router.route(req)

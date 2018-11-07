@@ -1,5 +1,5 @@
 const { RichEmbed } = require('discord.js')
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 const colors = require('../utils/colors.js')
 
 exports.render = (req, text) => {
@@ -8,5 +8,5 @@ exports.render = (req, text) => {
         .setColor(colors.bluegrey)
         .setDescription(`${text}`)
     req.message.channel.send(embed)
-    logger.view('rendering view: help')
+    log.view('rendering view: help')
 }

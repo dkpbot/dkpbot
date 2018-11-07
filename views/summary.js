@@ -1,14 +1,16 @@
 const { RichEmbed } = require('discord.js')
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
+const cast = require('../utils/cast.js')
 const colors = require('../utils/colors.js')
 
 exports.render = (req, user, maxdkp, dkp, loots) => {
-    logger.view('rendering view: summary')
-    let text = `**summary: ${user}**\n`
+    log.view('rendering view: summary')
+    let text = `**summary: ${cast.user(user)}**\n`
     text += `attendance: ${dkp}/${maxdkp} (${parseInt(dkp / maxdkp * 100)}%)\n`
     text += `loots:\n`
     loots.forEach(loot => {
-        text += `${loot.date.toLocaleDateString()} ${loot.alt == true ? loot.item + '(alt)' : loot.item}\n`
+        text += `${loot.date.toLocaleDateString()} ${loot.alt == true ? cast.role(loot.item) + '(alt)' : cast.role(loot.item)}` +
+            ` raid: ${loot.raidid}\n`
     })
     const embed = new RichEmbed()
         .setColor(colors.lightblue)

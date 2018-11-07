@@ -1,5 +1,5 @@
 require('dotenv').config()
-const logger = require('./utils/logger.js')
+const log = require('./utils/log.js')
 //views
 const warning_view = require('./views/warning.js')
 
@@ -50,12 +50,7 @@ exports.route = function (req) {
         let matches = req.command.match(route.pattern)
         if (matches) {
             if (!canAccess(req, route.access)) return warning_view.render(req, "insufficient permissions")
-            if (req.args === 'help') {
-                //controller.help(req)
-            }
-            else {
-                route.run(req, matches)
-            }
+            route.run(req, matches)
             return true
         }
     })

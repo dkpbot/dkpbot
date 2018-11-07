@@ -1,5 +1,5 @@
 const { RichEmbed } = require('discord.js')
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 const colors = require('../utils/colors.js')
 
 exports.render = (req, raid) => {
@@ -8,5 +8,5 @@ exports.render = (req, raid) => {
         .setDescription(`users: '${raid.event}' ${raid.date.toLocaleDateString()}\n` +
             raid.users)
     req.message.channel.send(embed)
-    logger.view('rendering view: user')
+    log.view('rendering view: user')
 }

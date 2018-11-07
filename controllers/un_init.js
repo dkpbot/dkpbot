@@ -1,6 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 //models
 const Event = mongoose.model('Event')
 const Item = mongoose.model('Item')
@@ -11,25 +11,23 @@ exports.run = async (req, matches) => {
     events = await Event.find({}, function (err) {
         if (err) return error_view.render(req, err)
     }).sort({ createdTimestamp: - 1 })
-    events.forEach(async x => {
-        id = x.id.match(/<#(\d*)>$/)[1]
-        logger.debug(id)
-        event = await req.message.guild.channels.get(id)
-        //logger.debug(event)
+    events.forEach(async event => {
+        event = await req.message.guild.channels.get(event._id)
+        //log.debug(event)
         await event.delete()
-        Event.deleteOne({ _id: x._id }, function (err) {
-            if (err) logger.error(err)
+        Event.deleteOne({ _id: event._id }, function (err) {
+            if (err) log.error(err)
         })
-        logger.debug(`deleting event ${x.name}`)
+        log.debug(`deleting event ${event.name}`)
     })
     //remove items
     roles = req.message.guild.roles.findAll('color', 0xFF00FF)
     await roles.forEach(async x => {
-        await Item.deleteOne({ _id: `<@&${x.id}>` }, function (err) {
-            if (err) logger.error(err)
+        await Item.deleteOne({ _id: x.id }, function (err) {
+            if (err) log.error(err)
         })
         await x.delete()
 
     })
-    logger.debug('un_init complete')
+    log.debug('un_init complete')
 }

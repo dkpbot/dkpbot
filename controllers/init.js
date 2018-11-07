@@ -1,6 +1,7 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
+const cast = require('../utils/cast.js')
 const fs = require('fs')
 //models
 const Event = mongoose.model('Event')
@@ -14,24 +15,24 @@ exports.run = async (req, matches) => {
     let parsed = JSON.parse(contents)
     let category = await req.message.guild.createChannel('events', 'category', [], 'dkpbot')
     let e = new Event({
-        _id: `<#${category.id}>`,
+        _id: category.id,
         name: 'events',
         img: ''
     })
     await e.save(function (err) {
-        if (err) return logger.debug(err)
+        if (err) return log.debug(err)
     })
 
     parsed.forEach(async x => {
         let channel = await req.message.guild.createChannel(x.event, 'text')
         channel.setParent(category.id)
         let e = new Event({
-            _id: `<#${channel.id}>`,
+            _id: channel.id,
             name: x.event,
             img: ''
         })
         await e.save(function (err) {
-            if (err) return logger.debug(err)
+            if (err) return log.debug(err)
         })
     })
 
@@ -45,15 +46,15 @@ exports.run = async (req, matches) => {
             mentionable: true,
             permissions: []
         })
-        logger.ok(`creating role: "${x.item}" <@&${role.id}>`)
+        log.ok(`creating role: "${x.item}" ${cast.role(role.id)}`)
         let i = new Item({
-            _id: `<@&${role.id}>`,
+            _id: role.id,
             name: x.item,
             value: 1,
             img: ''
         })
         await i.save(function (err) {
-            if (err) return logger.debug(err)
+            if (err) return log.debug(err)
         })
 
     })
@@ -69,5 +70,5 @@ exports.run = async (req, matches) => {
     })
     lootSeq.save()
 
-    logger.debug('init complete')
+    log.debug('init complete')
 }

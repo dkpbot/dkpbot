@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const logger = require('../utils/logger.js')
+const log = require('../utils/log.js')
 //views
 const raids_view = require('../views/raids.js')
 const help_view = require('../views/help.js')
