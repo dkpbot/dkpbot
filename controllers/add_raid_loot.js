@@ -50,13 +50,6 @@ exports.run = async (req, matches) => {
         `${cast.user(user)} looted a shiny ${alt == true ? cast.role(item) + '(alt)' : cast.role(item)}`)
 }
 
-exports.help = async (req, matches) => {
-    text = "+raids/n/loots @user, @item, <main | alt>\n" +
-        "@user looted @item at raid n\n" +
-        "<main | alt> is optional as 'main' is assumed"
-    help_view.render(req, text)
-}
-
 exports.test = async (req, matches) => {
 
 }

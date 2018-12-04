@@ -39,7 +39,6 @@ exports.add = function (pattern, file, access) {
     route = {
         pattern: pattern,
         run: controller.run,
-        help: controller.help,
         access: access
     }
     routes.push(route)

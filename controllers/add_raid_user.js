@@ -40,12 +40,6 @@ exports.run = async (req, matches) => {
     }
 }
 
-exports.help = function (req) {
-    let msg = `adds @user to raid n.\n\n` +
-        `usage: +raids/n/users [@user]\n`
-    help_view.render(req, msg)
-}
-
 exports.test = async (req, matches) => {
 
 }

@@ -44,12 +44,6 @@ exports.run = async (req, matches) => {
     })
 }
 
-exports.help = async (req, matches) => {
-    text = "-raids/{raid_id}/loots {loot_id}\n" +
-        "removes {loot_id} from {raid_id}\n"
-    help_view.render(req, text)
-}
-
 exports.test = async (req, matches) => {
 
 }

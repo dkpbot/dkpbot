@@ -22,7 +22,6 @@ exports.run = async (req, matches) => {
         user = parse.user(user)
     }
     let conditions = {
-        //users: user,
         date: { '$gte': moment().subtract(90, 'days') }
     }
     let raids = await Raid.find(conditions, function (err) {
@@ -54,10 +53,6 @@ exports.run = async (req, matches) => {
     })
 
     summary_view.render(req, user, maxdkp, dkp, loots)
-
-}
-
-exports.help = function (req) {
 
 }
 

@@ -18,14 +18,6 @@ exports.run = async (req, matches) => {
     await raid_view.render(req, r)
 }
 
-exports.roles = process.env.USER_ROLES
-
-exports.help = function (req) {
-    let msg = `returns details of raid n.\n\n` +
-        `usage: ?raids/n\n`
-    help_view.render(req, msg)
-}
-
 exports.test = async (req, matches) => {
 
 }

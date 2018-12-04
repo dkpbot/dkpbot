@@ -20,7 +20,6 @@ models.forEach(model => {
 })
 
 //register routes
-router.add(/\!help$/, './controllers/help', 'all')
 router.add(/\!summary$/, './controllers/summary', 'user')
 router.add(/\?raids$/, './controllers/list_raids', 'user')
 router.add(/\?raids\/(\d+)$/, './controllers/read_raid', 'user')

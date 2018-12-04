@@ -43,19 +43,12 @@ exports.run = async (req, matches) => {
         enteredby: `${req.message.author.id}`,
         users: users,
         loots: [],
-        value: value || 1
+        value: value == undefined ? 1 : value
     })
     await r.save(function (err) {
         if (err) return error_view.render(req, err)
     })
     raid_view.render(req, r)
-}
-
-exports.help = function (req) {
-    let msg = `creates a new raid and adds all users that react with a ${thumbsup} after a short time.\n\n` +
-        `usage: !attendance [raid name]\n`
-
-    help_view.render(req, msg)
 }
 
 exports.test = async () => {

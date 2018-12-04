@@ -31,10 +31,6 @@ exports.run = async (req, matches) => {
 
 }
 
-exports.help = async (req, matches) => {
-
-}
-
 exports.test = async (req, matches) => {
 
 }

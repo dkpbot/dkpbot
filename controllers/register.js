@@ -57,10 +57,6 @@ exports.run = async (req, matches) => {
 
 }
 
-exports.help = function (req) {
-
-}
-
 exports.test = async (req, matches) => {
 
 }

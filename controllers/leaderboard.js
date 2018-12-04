@@ -39,10 +39,6 @@ exports.run = async (req, matches) => {
     return leaderboard_view.render(req, maxdkp, tallies)
 }
 
-exports.help = function (req) {
-
-}
-
 exports.test = async (req, matches) => {
 
 }

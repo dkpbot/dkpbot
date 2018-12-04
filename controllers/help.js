@@ -85,10 +85,6 @@ exports.run = async (req, matches) => {
     return allResponse(req)
 }
 
-exports.help = function (req) {
-    return this.run(req)
-}
-
 exports.test = async () => {
     log.debug('command.test')
 }

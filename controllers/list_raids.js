@@ -32,12 +32,6 @@ exports.run = async (req, matches) => {
     raids_view.render(req, raids)
 }
 
-exports.help = function (req) {
-    let msg = `lists most recent raids\n\n` +
-        `usage: ?raids\n`
-    help_view.render(req, msg)
-}
-
 exports.test = async (req, matches) => {
 
 }

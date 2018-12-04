@@ -44,10 +44,6 @@ exports.run = async (req, matches) => {
     raid_view.render(req, r)
 }
 
-exports.help = async (req, matches) => {
-
-}
-
 exports.test = async (req, matches) => {
 
 }
