@@ -27,5 +27,3 @@ exports.role = function (role) {
         return role
     }
 }
-
-//exports.date =

@@ -13,11 +13,14 @@ exports.render = (req, raid) => {
         let item = loot.alt == true ? `${cast.role(loot.item)} (alt)` : cast.role(loot.item)
         return `\n${loot.id} ${user} ${item}`
     })
+    let hours = raid.date.getHours()
+    let minutes = raid.date.getMinutes()
     const embed = new RichEmbed()
         .setColor(colors.lightblue)
         .setDescription(`**raid: ${cast.channel(raid.event)}**\n` +
             `id: ${raid.id}\n` +
             `date: ${raid.date.toLocaleDateString()}\n` +
+            `time: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}\n` +
             `entered by: ${enteredby}\n` +
             `value: ${raid.value}\n` +
             `users: ${users}\n` +

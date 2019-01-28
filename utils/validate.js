@@ -15,5 +15,6 @@ exports.role = function (role) {
 
 exports.date = function (date) {
     var regex = /(\d+)\-(\d+)\-(\d+)/
+    //add in stuff to validate year, month, days
     return regex.test(date)
 }
