@@ -19,13 +19,14 @@ exports.run = async (req, matches) => {
     if (!validate.channel(event)) return warning_view.render(req, "invalid raid. please use #raid-name")
     event = parse.channel(event)
     if (args.length > 0) {
-        var date = args.shift().trim()
-        date = moment(date, 'YYYY-MM-DD')
-        if (!date.isValid()) return warning_view.render(req, "invalid date format. please use YYYY-MM-DD")
-    }
-    if (args.length > 0) {
         var value = args.shift().trim()
     }
+    if (args.length > 0) {
+        var date = args.shift().trim()
+        if (!validate.date(date)) return warning_view.render(req, "invalid date format. please use YYYY-MM-DD")
+        date = moment(date, 'YYYY-MM-DD')
+    }
+
 
     let seq = await Sequence.findOneAndUpdate({ _id: 'raids' }, { $inc: { n: 1 } })
     let r = new Raid({
