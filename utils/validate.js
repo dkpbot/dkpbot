@@ -12,3 +12,8 @@ exports.role = function (role) {
     var regex = /<@&(\d*)>$/
     return regex.test(role)
 }
+
+exports.date = function (date) {
+    var regex = /(\d+)\-(\d+)\-(\d+)/
+    return regex.test(date)
+}
