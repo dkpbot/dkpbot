@@ -1,5 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
+const moment = require('moment')
 const log = require('../utils/log.js')
 const cast = require('../utils/cast.js')
 const parse = require('../utils/parse.js')
@@ -20,6 +21,7 @@ exports.run = async (req, matches) => {
     if (!req.args) return warning_view.render(req, 'invalid parameters')
     let args = req.args.split(',')
     let event = args.shift().trim()
+    let date = Date.now()
     if (!validate.channel(event)) return warning_view.render(req, 'invalid event')
     event = parse.channel(event)
     if (args.length > 0) {
@@ -28,7 +30,7 @@ exports.run = async (req, matches) => {
     let msg = await attendance_view.render(req, event)
     await msg.react(thumbsup)
     const reactions = await msg.awaitReactions(
-        reaction => reaction.emoji.name === thumbsup, { time: 300000 })
+        reaction => reaction.emoji.name === thumbsup, { time: 300000 }) //300000
     let thumbreactions = await reactions.get(thumbsup)
     let users = thumbreactions.users.array().filter(x => x != process.env.BOT)
     users = users.map(x => parse.user(x.id))
@@ -38,7 +40,7 @@ exports.run = async (req, matches) => {
 
     let r = new Raid({
         _id: seq.n,
-        date: Date.now(),
+        date: date,
         event: event,
         enteredby: `${req.message.author.id}`,
         users: users,
