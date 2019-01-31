@@ -8,6 +8,7 @@ exports.render = (req, maxdkp, tallies) => {
     tallies.sort(function (a, b) { return b.value - a.value })
     let prettyTally = ''
     tallies.forEach(function (x, i) {
+        if (i > 50) return  //temp fix to block >2048 char error. do something better like send multiple messages
         let name = `${isNaN(x.name) == true ? x.name : cast.user(x.name)}`
         prettyTally += `${i + 1}) ${name}: ${parseInt(x.value / maxdkp * 100)}% (${x.value}/${maxdkp})\n`
     })
