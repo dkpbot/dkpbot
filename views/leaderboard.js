@@ -6,7 +6,7 @@ const colors = require('../utils/colors.js')
 exports.render = async (req, maxdkp, tallies) => {
     log.view('rendering view: leaderboard')
     tallies.sort(function (a, b) { return b.value - a.value })
-    cap = 60
+    cap = 50
     chunkCount = 1
 
     if (tallies.length > cap) {
