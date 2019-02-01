@@ -10,20 +10,24 @@ exports.render = async (req, maxdkp, tallies) => {
     chunkCount = 1
 
     if (tallies.length > cap) {
-        chunkCount = ~~(tallies.length / cap) + 1
+        chunkCount = Math.ceil(tallies.length / cap)
     }
-    chunkSize = tallies.length / chunkCount
+    chunkSize = Math.ceil(tallies.length / chunkCount)
+    log.debug(`tallies: ${tallies.length}`)
+    log.debug(`chunkCount: ${chunkCount}`)
+    log.debug(`chunksize: ${chunkSize}`)
     chunks = []
     embeds = []
     c = chunkCount
     while (c--) {
-        chunks.unshift(tallies.slice(c * chunkCount, c * chunkCount + chunkSize))
+        log.debug(`${c}.slice(${c * chunkCount},${(c + 1) * chunkSize})`)
+        chunks.unshift(tallies.slice(c * chunkSize, (c + 1) * chunkSize))
     }
     chunks.forEach((chunk, num) => {
         let prettyTally = ''
         chunk.forEach((x, i) => {
             let name = `${isNaN(x.name) == true ? x.name : cast.user(x.name)}`
-            prettyTally += `${((num * chunkCount) + i + 1).toString().padStart(2, '0')} ${name}: ${parseInt(x.value / maxdkp * 100)}% (${x.value}/${maxdkp})\n`
+            prettyTally += `${((num * chunkSize) + i + 1).toString().padStart(2, '0')} ${name}: ${parseInt(x.value / maxdkp * 100)}% (${x.value}/${maxdkp})\n`
         })
         let embed = new RichEmbed()
             .setColor(colors.lightblue)
