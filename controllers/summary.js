@@ -21,9 +21,22 @@ exports.run = async (req, matches) => {
         if (user === process.env.BOT) return warning_view.render(req, "invalid user")
         user = parse.user(user)
     }
+
+    //getlifetime dkp
+    console.time('dbcall')
+    let lifetimeRaids = await Raid.find({ users: user }, "value", function (err) {
+        if (err) return error_view.render(req, err)
+    })
+
+    let lifetimeDkp = lifetimeRaids
+        .map(x => x.value)
+        .reduce((acc, val) => acc + val, 0)
+
+    //get 90day ra  
     let conditions = {
         date: { '$gte': moment().subtract(90, 'days') }
     }
+
     let raids = await Raid.find(conditions, function (err) {
         if (err) return error_view.render(req, err)
     }).sort({ date: -1 })
@@ -52,8 +65,7 @@ exports.run = async (req, matches) => {
         })
     })
 
-    summary_view.render(req, user, maxdkp, dkp, loots)
-
+    summary_view.render(req, user, lifetimeDkp, maxdkp, dkp, loots)
 }
 
 exports.test = async (req, matches) => {

@@ -20,7 +20,6 @@ exports.run = async (req, matches) => {
         if (err) return error_view.render(req, err)
     }).sort({ date: -1 })
 
-
     let maxdkp = raids
         .map(x => x.value)
         .reduce((acc, val) => acc + val, 0)

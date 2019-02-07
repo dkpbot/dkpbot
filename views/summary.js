@@ -3,10 +3,11 @@ const log = require('../utils/log.js')
 const cast = require('../utils/cast.js')
 const colors = require('../utils/colors.js')
 
-exports.render = (req, user, maxdkp, dkp, loots) => {
+exports.render = (req, user, lifetimeDkp, maxdkp, dkp, loots) => {
     log.view('rendering view: summary')
     let text = `**summary: ${cast.user(user)}**\n`
-    text += `attendance: ${dkp}/${maxdkp} (${parseInt(dkp / maxdkp * 100)}%)\n`
+    text += `lifetime: ${lifetimeDkp}\n`
+    text += `90 day: ${dkp}/${maxdkp} (${parseInt(dkp / maxdkp * 100)}%)\n`
     text += `loots:\n`
     loots.forEach(loot => {
         text += `${loot.date.toLocaleDateString()} ${loot.alt == true ? cast.role(loot.item) + '(alt)' : cast.role(loot.item)}` +

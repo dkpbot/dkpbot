@@ -13,9 +13,6 @@ exports.render = async (req, maxdkp, tallies) => {
         chunkCount = Math.ceil(tallies.length / cap)
     }
     chunkSize = Math.ceil(tallies.length / chunkCount)
-    log.debug(`tallies: ${tallies.length}`)
-    log.debug(`chunkCount: ${chunkCount}`)
-    log.debug(`chunksize: ${chunkSize}`)
     chunks = []
     embeds = []
     c = chunkCount

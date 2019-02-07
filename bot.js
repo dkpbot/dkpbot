@@ -31,12 +31,12 @@ router.add(/\+raids\/(\d*)\/users$/, './controllers/add_raid_user', 'editor')
 router.add(/-raids$/, './controllers/delete_raid', 'editor')
 router.add(/-raids\/(\d*)\/loots$/, './controllers/delete_raid_loot', 'editor')
 router.add(/-raids\/(\d*)\/users$/, './controllers/delete_raid_user', 'editor')
-router.add(/\+item$/, './controllers/add_item', 'owner')
-router.add(/\!uninit$/, './controllers/un_init', 'owner')
-router.add(/\!init$/, './controllers/init', 'owner')
-router.add(/\!migrate$/, './controllers/migrate', 'owner')
-router.add(/\!register$/, './controllers/register', 'owner')
-router.add(/\!convert$/, './controllers/convert', 'owner')
+router.add(/\+item$/, './controllers/admin/add_item', 'owner')
+router.add(/\!uninit$/, './controllers/admin/un_init', 'owner')
+router.add(/\!init$/, './controllers/admin/init', 'owner')
+router.add(/\!migrate$/, './controllers/migration/migrate', 'owner')
+router.add(/\!register$/, './controllers/migration/register', 'owner')
+router.add(/\!convert$/, './controllers/migration/convert', 'owner')
 
 //register discord event handlers
 fs.readdir('./events/', (err, files) => {
