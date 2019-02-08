@@ -15,8 +15,8 @@ exports.render = (req, raid) => {
         return `\n${loot.id} ${user} ${item}`
     })
     let date = moment(raid.date)
-    console.log(date.format())
-    console.log(raid.date.toString())
+    console.log(date.format('YYYY-MM-DD'))
+    console.log(raid.date.toLocaleDateString())
 
     let hours = raid.date.getHours()
     let minutes = raid.date.getMinutes()
@@ -24,7 +24,7 @@ exports.render = (req, raid) => {
         .setColor(colors.lightblue)
         .setDescription(`**raid: ${cast.channel(raid.event)}**\n` +
             `id: ${raid.id}\n` +
-            `date: ${raid.date.toLocaleDateString()}\n` +
+            `date: ${moment(raid.date).format('YYYY-MM-DD')}\n` +
             `time: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}\n` +
             `entered by: ${enteredby}\n` +
             `value: ${raid.value}\n` +
