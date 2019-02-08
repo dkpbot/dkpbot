@@ -34,8 +34,6 @@ exports.run = async (req, matches) => {
         }
 
     }
-    console.log(req.message.author.id)
-    console.log(conditions)
     //fetch data
     raids = await Raid.find(conditions, function (err) {
         if (err) return error_view.render(req, err)

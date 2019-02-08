@@ -1,4 +1,5 @@
 const { RichEmbed } = require('discord.js')
+const moment = require('moment')
 const log = require('../utils/log.js')
 const cast = require('../utils/cast.js')
 const colors = require('../utils/colors.js')
@@ -10,7 +11,7 @@ exports.render = (req, user, lifetimeDkp, maxdkp, dkp, loots) => {
     text += `90 day: ${dkp}/${maxdkp} (${parseInt(dkp / maxdkp * 100)}%)\n`
     text += `loots:\n`
     loots.forEach(loot => {
-        text += `${loot.date.toLocaleDateString()} ${loot.alt == true ? cast.role(loot.item) + '(alt)' : cast.role(loot.item)}` +
+        text += `${moment(loot.date).format('YYYY-MM-DD')} ${loot.alt == true ? cast.role(loot.item) + '(alt)' : cast.role(loot.item)}` +
             ` raid: ${loot.raidid}\n`
     })
     const embed = new RichEmbed()
