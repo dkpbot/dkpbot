@@ -21,6 +21,7 @@ models.forEach(model => {
 
 //register routes
 router.add(/\!summary$/, './controllers/summary', 'user')
+router.add(/\!missing$/, './controllers/missing', 'user')
 router.add(/\?raids$/, './controllers/list_raids', 'user')
 router.add(/\?raids\/(\d+)$/, './controllers/read_raid', 'user')
 router.add(/\!leaderboard$/, './controllers/leaderboard', 'user')

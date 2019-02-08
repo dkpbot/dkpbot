@@ -1,4 +1,5 @@
 const { RichEmbed } = require('discord.js')
+const moment = require('moment')
 const log = require('../utils/log.js')
 const cast = require('../utils/cast.js')
 const colors = require('../utils/colors.js')
@@ -13,6 +14,10 @@ exports.render = (req, raid) => {
         let item = loot.alt == true ? `${cast.role(loot.item)} (alt)` : cast.role(loot.item)
         return `\n${loot.id} ${user} ${item}`
     })
+    let date = moment(raid.date)
+    console.log(date.format())
+    console.log(raid.date.toString())
+
     let hours = raid.date.getHours()
     let minutes = raid.date.getMinutes()
     const embed = new RichEmbed()
