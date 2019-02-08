@@ -20,12 +20,12 @@ models.forEach(model => {
 })
 
 //register routes
-router.add(/\!summary$/, './controllers/summary', 'user')
-router.add(/\!missing$/, './controllers/missing', 'user')
+router.add(/\?summary$/, './controllers/summary', 'user')
+router.add(/\?missing$/, './controllers/missing', 'user')
 router.add(/\?raids$/, './controllers/list_raids', 'user')
 router.add(/\?raids\/(\d+)$/, './controllers/read_raid', 'user')
-router.add(/\!leaderboard$/, './controllers/leaderboard', 'user')
-router.add(/\!attendance$/, './controllers/attendance', 'editor')
+router.add(/\?leaderboard$/, './controllers/leaderboard', 'user')
+router.add(/\+attendance$/, './controllers/attendance', 'editor')
 router.add(/\+raids$/, './controllers/add_raid', 'editor')
 router.add(/\+raids\/(\d*)\/loots$/, './controllers/add_raid_loot', 'editor')
 router.add(/\+raids\/(\d*)\/users$/, './controllers/add_raid_user', 'editor')

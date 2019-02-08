@@ -12,6 +12,7 @@ const Raid = mongoose.model('Raid')
 
 exports.run = async (req, matches) => {
     //validate args
+    console.log(req.args)
     let conditions = { date: { '$gte': moment().subtract(90, 'days') } }
     if (req.args) {
         let args = req.args.trim()
