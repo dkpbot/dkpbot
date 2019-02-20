@@ -15,10 +15,9 @@ const Raid = mongoose.model('Raid')
 exports.run = async (req, matches) => {
     //validate args
     let raid_id = matches[1]
-    let user = req.args
-    if (!validate.user(user)) return warning_view.render(req, "invalid user")
-    if (user === process.env.BOT) return warning_view.render(req, "invalid user")
-    user = parse.user(user)
+    let args = req.args.split(',')
+    let users = []
+    let discards = []
 
     //fetch raid
     let r = await Raid.findOne({ _id: raid_id }, function (err) {
@@ -26,17 +25,35 @@ exports.run = async (req, matches) => {
     })
     if (!r) return warning_view.render(req, "invalid raid")
 
-    //add user
-    if (!r.users.includes(user)) {
-        r.users.push(user)
+    //seperate valid and invalid arguments
+    args.forEach(x => {
+        let user = x.trim()
+        if (!validate.user(user)) discards.push(user)
+        else {
+            user = parse.user(user)
+            if (r.users.includes(user)) {
+                discards.push(cast.user(user))
+            } else {
+                users.push(user)
+            }
+        }
+    })
+
+    if (users.length > 0) {
+        //save to db
+        r.users.push(...users)
         await r.save(function (err) {
             if (err) return error_view.render(req, err)
-            return ok_view.render(req,
-                `added ${cast.user(user)} ` +
-                `to raid ${r._id} ${cast.channel(r.event)}`)
         })
-    } else {
-        return warning_view.render(req, 'user is already attending this raid')
+        //show results
+        prettyUsers = users.map(x => { return cast.user(x) })
+        ok_view.render(req,
+            `added ${prettyUsers} ` +
+            `to raid ${r._id} ${cast.channel(r.event)} `)
+    }
+    if (discards.length > 0) {
+        warning_view.render(req,
+            `unable to add ${discards} `)
     }
 }
 

@@ -17,7 +17,7 @@ exports.render = async (req, maxdkp, tallies) => {
     embeds = []
     c = chunkCount
     while (c--) {
-        log.debug(`${c}.slice(${c * chunkCount},${(c + 1) * chunkSize})`)
+        //log.debug(`${c}.slice(${c * chunkCount},${(c + 1) * chunkSize})`)
         chunks.unshift(tallies.slice(c * chunkSize, (c + 1) * chunkSize))
     }
     chunks.forEach((chunk, num) => {
