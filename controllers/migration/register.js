@@ -56,7 +56,3 @@ exports.run = async (req, matches) => {
     ok_view.render(req, `all instances of ${eqdkpUser} replaced with ${cast.user(user)}`)
 
 }
-
-exports.test = async (req, matches) => {
-
-}

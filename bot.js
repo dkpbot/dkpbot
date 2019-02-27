@@ -35,9 +35,10 @@ router.add(/-raids\/(\d*)\/users$/, './controllers/delete_raid_user', 'editor')
 router.add(/\+item$/, './controllers/admin/add_item', 'owner')
 router.add(/\!uninit$/, './controllers/admin/un_init', 'owner')
 router.add(/\!init$/, './controllers/admin/init', 'owner')
-router.add(/\!migrate$/, './controllers/migration/migrate', 'owner')
+//router.add(/\!migrate$/, './controllers/migration/migrate', 'owner')
 router.add(/\!register$/, './controllers/migration/register', 'owner')
-router.add(/\!convert$/, './controllers/migration/convert', 'owner')
+//router.add(/\!convert$/, './controllers/migration/convert', 'owner')
+router.add(/\!bulkaddraiduser$/, './controllers/migration/add_raid_user_bulk', 'owner')
 
 //register discord event handlers
 fs.readdir('./events/', (err, files) => {
